@@ -71,8 +71,7 @@ Set these environment variables in Vercel: `TURSO_DATABASE_URL`,
 `ADMIN_GITHUB_LOGINS`. The build runs database migrations automatically.
 
 Optional: `GOOGLE_SITE_VERIFICATION` (Search Console HTML-tag code) and
-`NEXT_PUBLIC_SITE_URL` (only once there is a custom domain; otherwise Vercel's
-production URL is used).
+`NEXT_PUBLIC_SITE_URL` (overrides the default `https://www.parztech.am`).
 
 ## SEO
 
