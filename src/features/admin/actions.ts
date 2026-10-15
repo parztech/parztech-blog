@@ -1,16 +1,23 @@
 "use server";
 
-import { eq, sql } from "drizzle-orm";
+import { and, eq, isNull, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { db } from "@/db";
-import { posts, postStatuses, reactions, type PostStatus } from "@/db/schema";
+import {
+  posts,
+  postStatuses,
+  reactions,
+  type PostRow,
+  type PostStatus,
+} from "@/db/schema";
 import { MAX_TAGS } from "@/features/admin/constants";
 import { SLUG_PATTERN } from "@/features/admin/lib/slug";
 import { requireAdmin } from "@/features/auth/require-admin";
 import { categories } from "@/features/blog/config/categories";
 import { renderMarkdown } from "@/features/blog/lib/markdown";
+import { announcePost } from "@/features/telegram/lib/announce";
 import { routes } from "@/lib/routes";
 
 const postInput = z.object({
@@ -34,7 +41,14 @@ const postInput = z.object({
 export type PostInput = z.infer<typeof postInput>;
 
 export type SaveResult =
-  { ok: true; id: string; status: PostStatus } | { ok: false; error: string };
+  | {
+      ok: true;
+      id: string;
+      status: PostStatus;
+      /** Set when this first publish could not be posted to Telegram */
+      telegramFailed?: boolean;
+    }
+  | { ok: false; error: string };
 
 // Public pages, sitemap and RSS are prerendered; refreshing the root layout
 // invalidates all of them (exact-path calls for the .xml routes have no effect)
@@ -50,6 +64,40 @@ function isSlugTaken(error: unknown) {
   return false;
 }
 
+/** Inserts or updates the post; isFirstPublish is true only the first time it goes live */
+async function writePost(
+  id: string | undefined,
+  data: Omit<PostInput, "id">,
+  isPublishing: boolean,
+): Promise<{ row: PostRow | undefined; isFirstPublish: boolean }> {
+  if (!id) {
+    const [row] = await db
+      .insert(posts)
+      .values({ ...data, publishedAt: isPublishing ? new Date() : null })
+      .returning();
+    return { row, isFirstPublish: isPublishing };
+  }
+
+  const update = db.update(posts).set(data).where(eq(posts.id, id)).returning();
+  if (!isPublishing) {
+    const [row] = await update;
+    return { row, isFirstPublish: false };
+  }
+
+  // publishedAt is set only while still empty, so the original date survives
+  // re-publishing, and only one of several concurrent saves gets the claim back.
+  // A batch is atomic: if the update fails (e.g. slug taken), the claim rolls back.
+  const [claimed, [row]] = await db.batch([
+    db
+      .update(posts)
+      .set({ publishedAt: sql`unixepoch()` })
+      .where(and(eq(posts.id, id), isNull(posts.publishedAt)))
+      .returning({ id: posts.id }),
+    update,
+  ]);
+  return { row, isFirstPublish: claimed.length > 0 };
+}
+
 export async function savePost(input: PostInput): Promise<SaveResult> {
   await requireAdmin();
 
@@ -61,27 +109,18 @@ export async function savePost(input: PostInput): Promise<SaveResult> {
   const isPublishing = data.status === "published";
 
   try {
-    const [row] = id
-      ? await db
-          .update(posts)
-          .set({
-            ...data,
-            // Keep the original publish date when re-publishing or editing
-            ...(isPublishing && {
-              publishedAt: sql`coalesce(${posts.publishedAt}, unixepoch())`,
-            }),
-          })
-          .where(eq(posts.id, id))
-          .returning()
-      : await db
-          .insert(posts)
-          .values({ ...data, publishedAt: isPublishing ? new Date() : null })
-          .returning();
-
+    const { row, isFirstPublish } = await writePost(id, data, isPublishing);
     if (!row) return { ok: false, error: "Հոդվածը չի գտնվել" };
 
     refreshSite();
-    return { ok: true, id: row.id, status: row.status };
+
+    const announcement = isFirstPublish ? await announcePost(row) : "skipped";
+    return {
+      ok: true,
+      id: row.id,
+      status: row.status,
+      telegramFailed: announcement === "failed",
+    };
   } catch (error) {
     if (isSlugTaken(error)) {
       return { ok: false, error: "Այս հասցեով հոդված արդեն կա" };

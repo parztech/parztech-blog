@@ -45,6 +45,7 @@
   --color-brand-apricot: var(--brand-apricot);
   --color-brand-cyan: var(--brand-cyan);
   --color-brand-emerald: var(--brand-emerald);
+  --color-telegram: var(--telegram);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -97,6 +98,8 @@
   --brand-apricot: oklch(0.76 0.16 58);
   --brand-cyan: oklch(0.7 0.14 205);
   --brand-emerald: oklch(0.68 0.16 160);
+  /* Darker than Telegram's #26a5e4 so white text on it passes WCAG AA */
+  --telegram: #1a75ab;
 }
 
 .dark {

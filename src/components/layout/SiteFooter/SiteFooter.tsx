@@ -3,6 +3,12 @@ import Link from "next/link";
 import { Logo } from "@/components/layout/Logo";
 import { Separator } from "@/components/ui/separator";
 import { categories } from "@/features/blog/config/categories";
+import { SocialIcon } from "@/features/share/components/SocialIcon";
+import {
+  TELEGRAM_FOOTER_LABEL,
+  TELEGRAM_NETWORK,
+} from "@/features/telegram/constants";
+import { telegramChannel } from "@/features/telegram/lib/channel";
 import { siteConfig } from "@/config/site";
 import { routes } from "@/lib/routes";
 
@@ -15,6 +21,20 @@ export default function SiteFooter() {
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
             {siteConfig.description}
           </p>
+          {telegramChannel && (
+            <a
+              href={telegramChannel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm font-medium transition-colors hover:border-telegram"
+            >
+              <SocialIcon
+                network={TELEGRAM_NETWORK}
+                className="text-telegram"
+              />
+              {TELEGRAM_FOOTER_LABEL}
+            </a>
+          )}
         </div>
         <div>
           <h3 className="mb-3 text-sm font-semibold">Նավարկում</h3>

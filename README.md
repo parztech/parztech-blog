@@ -73,6 +73,10 @@ Set these environment variables in Vercel: `TURSO_DATABASE_URL`,
 Optional: `GOOGLE_SITE_VERIFICATION` (Search Console HTML-tag code) and
 `NEXT_PUBLIC_SITE_URL` (overrides the default `https://www.parztech.am`).
 
+Telegram: set `TELEGRAM_CHANNEL` (channel username) to show "Join" links, and
+`TELEGRAM_BOT_TOKEN` (a bot that is an admin of the channel) to post each new
+article to the channel on its first publish (skipped in local development).
+
 ## SEO
 
 - `/sitemap.xml`, `/robots.txt` and `/rss.xml` are generated from published posts

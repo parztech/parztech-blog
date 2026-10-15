@@ -24,6 +24,7 @@ import { PostReactions } from "@/features/reactions/components/PostReactions";
 import { JsonLd } from "@/features/seo/components/JsonLd";
 import { ShareButtons } from "@/features/share/components/ShareButtons";
 import { ShareMenu } from "@/features/share/components/ShareMenu";
+import { TelegramCard } from "@/features/telegram/components/TelegramCard";
 import { pageMetadata } from "@/features/seo/lib/metadata";
 import { blogPostingSchema } from "@/features/seo/lib/schema";
 import { routes } from "@/lib/routes";
@@ -130,6 +131,7 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
           <PostBody html={post.html} />
           <PostReactions postId={post.id} />
           <ShareButtons {...share} />
+          <TelegramCard />
 
           {post.tags.length > 0 && (
             <div className="mt-12 flex flex-wrap items-center gap-2">

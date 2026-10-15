@@ -34,7 +34,7 @@ export default function ShareButtons(payload: ShareButtonsProps) {
         {prefersNativeShare && (
           <Button
             onClick={shareNatively}
-            className="h-10 rounded-full px-5 shadow-lg shadow-primary/25"
+            className="h-10 rounded-full px-5 shadow-lg shadow-primary/25 pointer-coarse:h-11"
           >
             <Share2 />
             {SHARE_LABEL}
@@ -50,7 +50,7 @@ export default function ShareButtons(payload: ShareButtonsProps) {
             title={network.label}
             className={cn(
               buttonVariants({ variant: "outline", size: "icon" }),
-              "size-10 rounded-full text-muted-foreground transition-transform hover:-translate-y-0.5",
+              "size-10 rounded-full text-muted-foreground transition-transform hover:-translate-y-0.5 pointer-coarse:size-11",
               network.hoverClass,
             )}
           >
@@ -63,7 +63,7 @@ export default function ShareButtons(payload: ShareButtonsProps) {
           onClick={copyLink}
           aria-label={COPY_LINK_LABEL}
           title={COPY_LINK_LABEL}
-          className="size-10 rounded-full text-muted-foreground transition-transform hover:-translate-y-0.5 hover:text-primary"
+          className="size-10 rounded-full text-muted-foreground transition-transform hover:-translate-y-0.5 hover:text-primary pointer-coarse:size-11"
         >
           {copied ? <Check className="text-brand-emerald" /> : <Link2 />}
         </Button>

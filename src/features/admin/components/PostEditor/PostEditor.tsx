@@ -111,6 +111,11 @@ export default function PostEditor({ initial }: PostEditorProps) {
               ? "Հոդվածը թարմացված է"
               : "Հոդվածը հրապարակված է 🎉",
         );
+        if (result.telegramFailed) {
+          toast.warning(
+            "Հոդվածը հրապարակված է, բայց Telegram ալիքում չհաջողվեց կիսվել։ Կիսվիր ձեռքով։",
+          );
+        }
         if (submitted.id) router.refresh();
         else router.replace(routes.adminEditPost(result.id));
       } catch (error) {

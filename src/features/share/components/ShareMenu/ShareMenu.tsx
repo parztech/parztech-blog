@@ -23,7 +23,9 @@ import type { ShareMenuProps } from "./types";
 const triggerButtonProps = {
   variant: "outline",
   size: "sm",
-  className: "rounded-full",
+  // Invisible hit area grows the 28px pill to a 44px tap target on touchscreens
+  className:
+    "relative rounded-full pointer-coarse:after:absolute pointer-coarse:after:-inset-2 pointer-coarse:after:content-['']",
 } as const;
 
 /** Compact share button: the OS share sheet on touch devices, a menu elsewhere */
