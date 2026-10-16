@@ -30,6 +30,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: absoluteUrl(routes.partners),
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
     ...posts.map((post) => ({
       url: absoluteUrl(routes.post(post.slug)),
       lastModified: post.updatedAt,

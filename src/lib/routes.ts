@@ -2,6 +2,7 @@ export const routes = {
   home: "/",
   blog: "/blog/",
   about: "/about/",
+  partners: "/partners/",
   rss: "/rss.xml",
   defaultOgImage: "/og.png",
   logo: "/logo.png",

@@ -9,11 +9,19 @@ export const siteConfig = {
   alternateNames: ["Parz", "ParzTech", "Պարզ", "Պարզ Թեք"],
   locale: "hy_AM",
   author: "Թամարա Մարտիրոսյան",
+  /** Shown on the partnerships page */
+  contact: {
+    email: "tamara.martirosyan.93@gmail.com",
+    /** Personal Telegram username without "@"; the Telegram button is hidden while empty */
+    telegram: "",
+  },
   nav: [
     { title: "Գլխավոր", href: routes.home },
     { title: "Բլոգ", href: routes.blog },
     { title: "Իմ մասին", href: routes.about },
   ],
+  /** Footer-only links: pages meant for partners rather than readers */
+  footerNav: [{ title: "Համագործակցություն", href: routes.partners }],
 } as const;
 
 export const siteTitle = `${siteConfig.name} | ${siteConfig.tagline}`;

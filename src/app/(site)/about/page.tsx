@@ -1,15 +1,15 @@
-import { ArrowRight, HeartHandshake, Lightbulb, Target } from "lucide-react";
+import {
+  ArrowRight,
+  Handshake,
+  HeartHandshake,
+  Lightbulb,
+  Target,
+} from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { FeatureCard } from "@/components/FeatureCard";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { siteConfig } from "@/config/site";
 import { pageMetadata } from "@/features/seo/lib/metadata";
 import { cn } from "@/lib/utils";
@@ -45,7 +45,7 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="relative isolate">
+    <div className="relative isolate overflow-x-clip">
       <div className="absolute -top-32 left-1/2 -z-10 h-96 w-200 -translate-x-1/2 rounded-full bg-linear-to-r from-brand-violet/25 via-brand-pink/20 to-brand-apricot/25 blur-3xl" />
       <div className="mx-auto max-w-4xl px-4 pt-16 sm:px-6 md:pt-24">
         <header className="space-y-5 text-center">
@@ -61,31 +61,12 @@ export default function AboutPage() {
         </header>
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {values.map((v) => (
-            <Card key={v.title} className="gap-4">
-              <CardHeader>
-                <div
-                  className={cn(
-                    "mb-2 grid size-11 place-items-center rounded-xl",
-                    v.tint,
-                  )}
-                >
-                  <v.icon className="size-5" />
-                </div>
-                <CardTitle className="text-lg font-semibold">
-                  {v.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="leading-relaxed">
-                  {v.text}
-                </CardDescription>
-              </CardContent>
-            </Card>
+          {values.map((value) => (
+            <FeatureCard key={value.title} {...value} />
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-16 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href={routes.blog}
             className={cn(
@@ -95,6 +76,16 @@ export default function AboutPage() {
           >
             Կարդալ հոդվածները
             <ArrowRight />
+          </Link>
+          <Link
+            href={routes.partners}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "lg" }),
+              "h-11 rounded-full px-6",
+            )}
+          >
+            <Handshake />
+            Համագործակցություն
           </Link>
         </div>
       </div>

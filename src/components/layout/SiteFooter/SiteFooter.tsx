@@ -39,7 +39,7 @@ export default function SiteFooter() {
         <div>
           <h3 className="mb-3 text-sm font-semibold">Նավարկում</h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            {siteConfig.nav.map((item) => (
+            {[...siteConfig.nav, ...siteConfig.footerNav].map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="hover:text-foreground">
                   {item.title}
