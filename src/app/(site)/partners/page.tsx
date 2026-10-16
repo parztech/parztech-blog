@@ -30,7 +30,7 @@ export const metadata: Metadata = pageMetadata({
 const formats = [
   {
     icon: Newspaper,
-    title: "Ուրբաթյա ամփոփման հովանավորություն",
+    title: "Ուրբաթ օրվա ամփոփման հովանավորություն",
     text: "Շաբաթվա գլխավոր տեխնոլոգիական նորությունները՝ մեկ ամփոփման մեջ։ Հովանավորը նշվում է ամփոփման մեջ, և ձեր անունը տեսնում են բոլոր ընթերցողները։",
     tint: "bg-brand-violet/12 text-brand-violet",
   },
