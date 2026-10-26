@@ -5,19 +5,14 @@ export const siteConfig = {
   tagline: "Տեխնոլոգիաներ և ՍԻ (արհեստական բանականություն)՝ պարզ լեզվով",
   description:
     "Parz Tech-ը հայալեզու բլոգ է տեխնոլոգիաների և արհեստական բանականության (ՍԻ) մասին՝ բացատրված պարզ ու հասկանալի։",
-  /** Other names people search for; listed in structured data for Google */
   alternateNames: ["Parz", "ParzTech", "Պարզ", "Պարզ Թեք"],
   locale: "hy_AM",
-  /** Hex versions of --background in globals.css, for browser UI that can't read CSS variables */
   themeColor: { light: "#fbfbfe", dark: "#090913" },
   author: "Թամարա Մարտիրոսյան",
-  /** Shown on the partnerships page */
   contact: {
-    email: "tamara.martirosyan.93@gmail.com",
-    /** Personal Telegram username without "@"; the Telegram button is hidden while empty */
+    email: "info@parztech.am",
     telegram: "",
   },
-  /** Brand profiles: linked in the footer and listed as sameAs for Google */
   social: {
     instagram: "https://www.instagram.com/parztech/",
   },
@@ -26,7 +21,6 @@ export const siteConfig = {
     { title: "Բլոգ", href: routes.blog },
     { title: "Իմ մասին", href: routes.about },
   ],
-  /** Footer-only links: pages meant for partners rather than readers */
   footerNav: [{ title: "Համագործակցություն", href: routes.partners }],
 } as const;
 
