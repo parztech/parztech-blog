@@ -32,13 +32,8 @@ export const TOOLBAR_TOOLS: ToolbarTool[] = [
   },
   {
     icon: Link2,
-    label: "Հղում",
-    edit: {
-      kind: "wrap",
-      before: "[",
-      after: "](https://)",
-      placeholder: "հղման տեքստ",
-    },
+    label: "Հղում (⌘K)",
+    edit: { kind: "link", placeholder: "հղման տեքստ" },
   },
   { icon: List, label: "Ցուցակ", edit: { kind: "line", prefix: "- " } },
   {
@@ -68,4 +63,5 @@ export const TOOLBAR_TOOLS: ToolbarTool[] = [
 export const SHORTCUTS: Record<string, MarkdownEdit> = {
   b: TOOLBAR_TOOLS[2].edit,
   i: TOOLBAR_TOOLS[3].edit,
+  k: TOOLBAR_TOOLS[4].edit,
 };

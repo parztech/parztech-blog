@@ -40,6 +40,7 @@ import { DeletePostButton } from "@/features/admin/components/DeletePostButton";
 import {
   MarkdownToolbar,
   applyEdit,
+  pasteAsLink,
   SHORTCUTS,
 } from "@/features/admin/components/MarkdownToolbar";
 import { StatusBadge } from "@/features/admin/components/StatusBadge";
@@ -75,6 +76,10 @@ export default function PostEditor({ initial }: PostEditorProps) {
 
   function update<K extends keyof EditorPost>(key: K, value: EditorPost[K]) {
     setPost((p) => ({ ...p, [key]: value }));
+  }
+
+  function setContent(content: string) {
+    update("content", content);
   }
 
   function setTitle(title: string) {
@@ -266,7 +271,7 @@ export default function PostEditor({ initial }: PostEditorProps) {
               {tab === "write" && (
                 <MarkdownToolbar
                   textareaRef={textareaRef}
-                  onChange={(v) => update("content", v)}
+                  onChange={setContent}
                 />
               )}
             </div>
@@ -275,14 +280,18 @@ export default function PostEditor({ initial }: PostEditorProps) {
               <Textarea
                 ref={textareaRef}
                 value={post.content}
-                onChange={(e) => update("content", e.target.value)}
+                onChange={(e) => setContent(e.target.value)}
                 onKeyDown={(e) => {
                   const edit = (e.metaKey || e.ctrlKey) && SHORTCUTS[e.key];
                   if (edit) {
                     e.preventDefault();
-                    applyEdit(e.currentTarget, edit, (v) =>
-                      update("content", v),
-                    );
+                    applyEdit(e.currentTarget, edit, setContent);
+                  }
+                }}
+                onPaste={(e) => {
+                  const pasted = e.clipboardData.getData("text/plain");
+                  if (pasteAsLink(e.currentTarget, pasted, setContent)) {
+                    e.preventDefault();
                   }
                 }}
                 placeholder={

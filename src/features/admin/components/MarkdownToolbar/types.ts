@@ -1,9 +1,10 @@
 import type { LucideIcon } from "lucide-react";
 import type { RefObject } from "react";
 
-/** A formatting action: wrap the selection, or prefix the current line */
+/** A formatting action: wrap the selection, turn it into a link, or prefix the current line */
 export type MarkdownEdit =
   | { kind: "wrap"; before: string; after: string; placeholder: string }
+  | { kind: "link"; placeholder: string }
   | { kind: "line"; prefix: string };
 
 export type ToolbarTool = {

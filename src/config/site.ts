@@ -8,6 +8,8 @@ export const siteConfig = {
   /** Other names people search for; listed in structured data for Google */
   alternateNames: ["Parz", "ParzTech", "Պարզ", "Պարզ Թեք"],
   locale: "hy_AM",
+  /** Hex versions of --background in globals.css, for browser UI that can't read CSS variables */
+  themeColor: { light: "#fbfbfe", dark: "#090913" },
   author: "Թամարա Մարտիրոսյան",
   /** Shown on the partnerships page */
   contact: {

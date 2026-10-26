@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_Armenian, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -39,6 +39,20 @@ export const metadata: Metadata = {
   ...(process.env.GOOGLE_SITE_VERIFICATION && {
     verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   }),
+};
+
+// Tints the mobile browser bar to match the page background
+export const viewport: Viewport = {
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: siteConfig.themeColor.light,
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: siteConfig.themeColor.dark,
+    },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
