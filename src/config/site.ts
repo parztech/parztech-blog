@@ -17,6 +17,10 @@ export const siteConfig = {
     /** Personal Telegram username without "@"; the Telegram button is hidden while empty */
     telegram: "",
   },
+  /** Brand profiles: linked in the footer and listed as sameAs for Google */
+  social: {
+    instagram: "https://www.instagram.com/parztech/",
+  },
   nav: [
     { title: "Գլխավոր", href: routes.home },
     { title: "Բլոգ", href: routes.blog },

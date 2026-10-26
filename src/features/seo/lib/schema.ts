@@ -1,6 +1,7 @@
 import { siteConfig } from "@/config/site";
 import { getCategory } from "@/features/blog/config/categories";
 import type { PostMeta } from "@/features/blog/lib/queries";
+import { telegramChannel } from "@/features/telegram/lib/channel";
 import { absoluteUrl } from "@/lib/site-url";
 import { routes } from "@/lib/routes";
 
@@ -20,6 +21,10 @@ export function websiteSchema() {
         url: absoluteUrl(routes.home),
         logo: absoluteUrl(routes.logo),
         description: siteConfig.description,
+        // Lets Google attribute these profiles to the site
+        sameAs: [siteConfig.social.instagram, telegramChannel?.url].filter(
+          Boolean,
+        ),
       },
       {
         "@type": "WebSite",

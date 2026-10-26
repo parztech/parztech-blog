@@ -1,9 +1,10 @@
 import Link from "next/link";
 
+import { FooterSocialLink } from "@/components/layout/FooterSocialLink";
 import { Logo } from "@/components/layout/Logo";
 import { Separator } from "@/components/ui/separator";
 import { categories } from "@/features/blog/config/categories";
-import { SocialIcon } from "@/features/share/components/SocialIcon";
+import { INSTAGRAM_ICON } from "@/features/share/constants";
 import {
   TELEGRAM_FOOTER_LABEL,
   TELEGRAM_NETWORK,
@@ -21,20 +22,26 @@ export default function SiteFooter() {
           <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
             {siteConfig.description}
           </p>
-          {telegramChannel && (
-            <a
-              href={telegramChannel.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border bg-background px-4 py-2 text-sm font-medium transition-colors hover:border-telegram"
+          <div className="flex flex-wrap gap-2">
+            {telegramChannel && (
+              <FooterSocialLink
+                href={telegramChannel.url}
+                icon={TELEGRAM_NETWORK}
+                className="hover:border-telegram"
+                iconClassName="text-telegram"
+              >
+                {TELEGRAM_FOOTER_LABEL}
+              </FooterSocialLink>
+            )}
+            <FooterSocialLink
+              href={siteConfig.social.instagram}
+              icon={INSTAGRAM_ICON}
+              className="hover:border-instagram"
+              iconClassName="text-instagram"
             >
-              <SocialIcon
-                network={TELEGRAM_NETWORK}
-                className="text-telegram"
-              />
-              {TELEGRAM_FOOTER_LABEL}
-            </a>
-          )}
+              Instagram
+            </FooterSocialLink>
+          </div>
         </div>
         <div>
           <h3 className="mb-3 text-sm font-semibold">Նավարկում</h3>
